@@ -5,10 +5,7 @@ import express from 'express';
 
 import mongoose from "mongoose";
 import session from "express-session";
-const CONNECTION_STRING = process.env.DB_CONNECTION_STRING
-    || 'mongodb+srv://nbrisbois:nbrisbois123@cluster0.lntgm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority&authSource=admin'
-
-mongoose.connect(CONNECTION_STRING);
+mongoose.connect('mongodb://localhost:27017/pub-feed');
 
 const app = express();
 app.use(cors({

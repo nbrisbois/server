@@ -50,8 +50,8 @@ const logout = async (req, res) => {
 
 const update = async (req, res) => {
     const currentUser = req.session['currentUser']
-    await updateUser(currentUser._id, req.body.avatar)
-    res.sendStatus(200)
+    const response = await updateUser(currentUser._id, req.body)
+    res.json(response)
 }
 
 const findUser = async (req, res) => {

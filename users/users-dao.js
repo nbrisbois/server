@@ -13,9 +13,12 @@ export const findUsername = () => {
     return UsersModel.find()
 }
 
-export const updateUser = (id, avatar) => {
-    const something =  UsersModel.updateOne({_id : id}, {$set: {avatar: avatar}})
-    return something
+export const updateUser = async (id, file) => {
+    await UsersModel.updateOne({_id : id}, {$set: {username : file.file.username}})
+    await UsersModel.updateOne({_id : id}, {$set: {name : file.file.name}})
+    await UsersModel.updateOne({_id : id}, {$set: {email : file.file.email}})
+    await UsersModel.updateOne({_id : id}, {$set: {password : file.file.password}})
+    return UsersModel.findOne({_id: id});
 }
 
 export const createUser = (uid) => UsersModel.create(uid);

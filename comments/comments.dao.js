@@ -13,17 +13,22 @@ export const findComments = async () => {
 }
 
 export const deleteComment = async (comment) => {
-    console.log(comment)
-    return commentModel.remove({_id : comment._id})
+    return commentModel.deleteOne({_id : comment._id})
 }
 
 export const likeComment = async (comment, id) => {
     comment = await commentModel.findOne({_id : comment._id})
-    if (!(id in comment.userLikes)) {
+    if (!comment.userLikes.includes(id)) {
         const likes = await commentModel.findOne({_id : comment._id})
-        commentModel.updateOne({_id : comment._id},
+        await commentModel.updateOne({_id : comment._id},
             {$push: {userLikes : id}})
-
         const o = await commentModel.updateOne({_id : comment._id}, {likes : likes.likes + 1})
     }
+    else {
+        const likes = await commentModel.findOne({_id : comment._id})
+        await commentModel.updateOne({_id : comment._id},
+            {$pull: {userLikes : id}})
+        const o = await commentModel.updateOne({_id : comment._id}, {likes : likes.likes - 1})
+    }
+    return commentModel.findOne({_id : comment._id})
 }

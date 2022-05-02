@@ -31,8 +31,8 @@ const findComments = async (req, res) => {
 
 const like = async (req, res) => {
     const videoId = req.params.id
-    await liked(req.body, videoId)
-    res.sendStatus(200)
+    const resposne = await liked(req.body, videoId)
+    return res.json(resposne)
 }
 
 const deleteComment = async (req, res) => {
